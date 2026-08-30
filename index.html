@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ארבעת המינים - ניהול הזמנות</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ניהול הזמנות</p>
+          <h1>ארבעת המינים</h1>
+        </div>
+        <button id="resetDataBtn" class="ghost-btn">אפס נתונים</button>
+      </header>
+
+      <main class="dashboard">
+        <section class="panel form-panel">
+          <h2>הוספת הזמנה</h2>
+
+          <form id="orderForm">
+            <div class="field-grid">
+              <label>
+                <span>שם לקוח</span>
+                <input id="customerName" name="customerName" type="text" placeholder="לדוגמה: אבי כהן" required />
+              </label>
+
+              <label>
+                <span>טלפון</span>
+                <input id="customerPhone" name="customerPhone" type="tel" placeholder="050-1234567" required />
+              </label>
+
+              <label>
+                <span>סוג סט</span>
+                <select id="productType" name="productType" required>
+                  <option value="">בחר סט</option>
+                  <option value="מהודר א">מהודר א</option>
+                  <option value="מהודר ב">מהודר ב</option>
+                  <option value="כשר לברכה">כשר לברכה</option>
+                  <option value="סט רגיל">סט רגיל</option>
+                  <option value="אחר">אחר</option>
+                </select>
+              </label>
+
+              <label>
+                <span>כמות</span>
+                <input id="quantity" name="quantity" type="number" min="1" value="1" required />
+              </label>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="primary-btn">הוסף להזמנות</button>
+              <label class="upload-btn">
+                <input id="csvFileInput" type="file" accept=".csv,text/csv" />
+                <span>ייבא מ-Google Sheets</span>
+              </label>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel summary-panel">
+          <h2>סיכום</h2>
+          <div id="summaryCards" class="summary-cards"></div>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="section-header">
+            <h2>הזמנות</h2>
+            <button id="downloadCsvBtn" class="ghost-btn small-btn">הורד CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>שם</th>
+                  <th>טלפון</th>
+                  <th>סוג</th>
+                  <th>כמות</th>
+                  <th>הערות</th>
+                  <th>מחיקה</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel table-panel">
+          <h2>סיכום לפי לקוח</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>שם לקוח</th>
+                  <th>טלפון</th>
+                  <th>מוצרים</th>
+                  <th>כמות כוללת</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
