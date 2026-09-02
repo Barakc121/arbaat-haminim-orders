@@ -3,6 +3,12 @@ const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKXTurywqKCwdpag0pR4sg3WLISAptW8M6CB0HIhXhjIXyWycbzC7onXOBXwfmUvWOKwIBquSkY9L7/pub?output=csv&gid=0";
 const ADMIN_PASSWORD = "325276319";
 
+localStorage.removeItem(STORAGE_KEY);
+
+const state = {
+  orders: [],
+};
+
 const defaultProducts = [
   "מהודר א",
   "מהודר א מרוקאי",
@@ -15,15 +21,14 @@ const defaultProducts = [
   "כשר לברכה תימני",
 ];
 
-const state = {
-  orders: loadOrders(),
-};
-
 const form = document.getElementById("orderForm");
 const customerNameInput = document.getElementById("customerName");
 const customerPhoneInput = document.getElementById("customerPhone");
 const productTypeInput = document.getElementById("productType");
 const quantityInput = document.getElementById("quantity");
+const needsDeliveryInput = document.getElementById("needsDelivery");
+const deliveryAddressField = document.getElementById("deliveryAddressField");
+const deliveryAddressInput = document.getElementById("deliveryAddress");
 const ordersTableBody = document.getElementById("ordersTableBody");
 const customersTableBody = document.getElementById("customersTableBody");
 const summaryCards = document.getElementById("summaryCards");
@@ -32,6 +37,24 @@ const resetBtn = document.getElementById("resetDataBtn");
 const exportBtn = document.getElementById("downloadCsvBtn");
 const googleSheetBtn = document.getElementById("loadGoogleSheetBtn");
 const pageMode = document.body.dataset.mode;
+
+function toggleDeliveryFields() {
+  if (!needsDeliveryInput) return;
+  const shouldShow = needsDeliveryInput.checked;
+  if (deliveryAddressField) {
+    deliveryAddressField.classList.toggle("hidden", !shouldShow);
+  }
+  if (deliveryAddressInput && !shouldShow) {
+    deliveryAddressInput.value = "";
+  }
+}
+
+if (needsDeliveryInput) {
+  needsDeliveryInput.addEventListener("change", toggleDeliveryFields);
+  toggleDeliveryFields();
+}
+
+state.orders = loadOrders();
 
 if (pageMode === "admin") {
   const password = window.prompt("הכנס סיסמה למנהל");
@@ -187,6 +210,20 @@ function parseCSVText(text) {
       "מספריחידות",
       "כמותהזמנה",
     ]),
+    deliveryRequired: findHeaderIndex(headerMap, [
+      "צריךמשלוח",
+      "needsdelivery",
+      "delivery",
+      "משלוח",
+      "שולח",
+    ]),
+    deliveryAddress: findHeaderIndex(headerMap, [
+      "כתובתמשלוח",
+      "כתובת",
+      "address",
+      "deliveryaddress",
+      "לשוםמשלוח",
+    ]),
   };
 
   return dataRows
@@ -195,10 +232,16 @@ function parseCSVText(text) {
       const phone = row[matchedIndexes.phone] ?? row[1] ?? "";
       const product = row[matchedIndexes.product] ?? row[2] ?? "";
       const quantity = row[matchedIndexes.quantity] ?? row[3] ?? "1";
+      const deliveryRequiredValue = row[matchedIndexes.deliveryRequired] ?? "";
+      const deliveryAddressValue = row[matchedIndexes.deliveryAddress] ?? "";
 
       if (!normalizeText(name)) {
         return null;
       }
+
+      const shippingNeeded = ["כן", "yes", "true", "1"].includes(
+        normalizeText(deliveryRequiredValue).toLowerCase(),
+      );
 
       return {
         id: Date.now() + Math.random(),
@@ -209,6 +252,10 @@ function parseCSVText(text) {
           : "לא נקבע",
         quantity: normalizeText(quantity) ? parseNumber(quantity) : 1,
         note: "",
+        deliveryRequired: shippingNeeded,
+        deliveryAddress: shippingNeeded
+          ? normalizeText(deliveryAddressValue) || "לא צוינה כתובת"
+          : "",
       };
     })
     .filter(Boolean);
@@ -256,7 +303,7 @@ function renderSummary() {
 function renderOrders() {
   if (!state.orders.length) {
     ordersTableBody.innerHTML =
-      '<tr><td colspan="6" class="empty-state">עדיין אין הזמנות</td></tr>';
+      '<tr><td colspan="8" class="empty-state">עדיין אין הזמנות</td></tr>';
     return;
   }
 
@@ -268,6 +315,8 @@ function renderOrders() {
           <td>${escapeHtml(order.phone || "—")}</td>
           <td>${escapeHtml(order.product)}</td>
           <td>${order.quantity}</td>
+          <td>${order.deliveryRequired ? "כן" : "לא"}</td>
+          <td>${escapeHtml(order.deliveryRequired ? (order.deliveryAddress || "לא צוינה כתובת") : "—")}</td>
           <td>${escapeHtml(order.note || "—")}</td>
           <td><button class="delete-btn" data-id="${order.id}">מחק</button></td>
         </tr>
@@ -367,6 +416,11 @@ function escapeHtml(value) {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  if (needsDeliveryInput && needsDeliveryInput.checked && !normalizeText(deliveryAddressInput?.value)) {
+    alert("אנא כתוב כתובת משלוח מלאה");
+    return;
+  }
+
   const order = {
     id: Date.now() + Math.random(),
     name: normalizeText(customerNameInput.value),
@@ -374,6 +428,11 @@ form.addEventListener("submit", (event) => {
     product: getCanonicalProduct(productTypeInput.value),
     quantity: parseNumber(quantityInput.value),
     note: "",
+    deliveryRequired: Boolean(needsDeliveryInput && needsDeliveryInput.checked),
+    deliveryAddress:
+      needsDeliveryInput && needsDeliveryInput.checked
+        ? normalizeText(deliveryAddressInput.value)
+        : "",
   };
 
   if (!order.name || !order.phone || !order.product) {
@@ -386,10 +445,18 @@ form.addEventListener("submit", (event) => {
   render();
   form.reset();
   quantityInput.value = "1";
+  if (needsDeliveryInput) {
+    needsDeliveryInput.checked = false;
+    toggleDeliveryFields();
+  }
   customerNameInput.focus();
 
   if (pageMode === "public") {
-    alert("ההזמנה שלך נשלחה בהצלחה!");
+    alert("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");
+  }
+
+  if (pageMode === "admin") {
+    alert("ההזמנה נוספה בהצלחה! המשך בניהול ההזמנות.");
   }
 });
 
@@ -421,6 +488,7 @@ resetBtn.addEventListener("click", () => {
   const confirmed = window.confirm("האם למחוק את כל ההזמנות?");
   if (!confirmed) return;
 
+  localStorage.removeItem(STORAGE_KEY);
   state.orders = [];
   saveOrders();
   render();

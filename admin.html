@@ -60,6 +60,16 @@
                 <span>כמות</span>
                 <input id="quantity" name="quantity" type="number" min="1" value="1" required />
               </label>
+
+              <label class="checkbox-field">
+                <span>האם צריך משלוח?</span>
+                <input id="needsDelivery" name="needsDelivery" type="checkbox" />
+              </label>
+
+              <label id="deliveryAddressField" class="shipping-address hidden">
+                <span>לשם המשלוח</span>
+                <textarea id="deliveryAddress" name="deliveryAddress" rows="2" placeholder="כתובת מלאה למשלוח"></textarea>
+              </label>
             </div>
 
             <div class="actions">
@@ -91,6 +101,8 @@
                   <th>טלפון</th>
                   <th>סוג</th>
                   <th>כמות</th>
+                  <th>משלוח</th>
+                  <th>כתובת</th>
                   <th>הערות</th>
                   <th>מחיקה</th>
                 </tr>

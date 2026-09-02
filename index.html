@@ -50,13 +50,22 @@
                   <option value="כשר לברכה מרוקאי">כשר לברכה מרוקאי</option>
                   <option value="כשר לברכה תימני">כשר לברכה תימני</option>
                   <option value="סט רגיל">סט רגיל</option>
-                  <option value="אחר">אחר</option>
                 </select>
               </label>
 
               <label>
                 <span>כמות</span>
                 <input id="quantity" name="quantity" type="number" min="1" value="1" required />
+              </label>
+
+              <label class="checkbox-field">
+                <span>האם צריך משלוח?</span>
+                <input id="needsDelivery" name="needsDelivery" type="checkbox" />
+              </label>
+
+              <label id="deliveryAddressField" class="shipping-address hidden">
+                <span>לאן המשלוח</span>
+                <textarea id="deliveryAddress" name="deliveryAddress" rows="2" placeholder="כתובת מלאה למשלוח"></textarea>
               </label>
             </div>
 

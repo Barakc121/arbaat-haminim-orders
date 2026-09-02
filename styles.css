@@ -25,15 +25,73 @@ body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, sans-serif;
   background:
-    radial-gradient(circle at top, rgba(216, 155, 91, 0.1), transparent 35%),
-    linear-gradient(180deg, #fffaf5 0%, #f4ecdf 100%);
+    linear-gradient(180deg, rgba(255, 247, 236, 0.8), rgba(244, 230, 209, 0.85)),
+    url("https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1600&q=80") center/cover fixed no-repeat;
+  color: var(--text);
+}
+
+body[data-mode="public"] {
+  background:
+    linear-gradient(rgba(33, 26, 16, 0.25), rgba(33, 26, 16, 0.25)),
+    url("https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1600&q=80") center/cover fixed no-repeat;
+}
+
+body[data-mode="admin"] {
+  background:
+    linear-gradient(rgba(9, 14, 22, 0.7), rgba(9, 14, 22, 0.72)),
+    url("https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1600&q=80") center/cover fixed no-repeat;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.checkbox-field {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.checkbox-field input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary);
+}
+
+.shipping-address {
+  grid-column: 1 / -1;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
   color: var(--text);
 }
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(108, 52, 26, 0.28);
+  box-shadow: 0 0 0 4px rgba(108, 52, 26, 0.08);
 }
 
 .app-shell {
