@@ -156,6 +156,28 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: #fffdf4;
+  background: linear-gradient(120deg, #6c341a, #b58a43, #315b3b, #6c341a);
+  background-size: 300% 300%;
+  border: 1px solid rgba(255, 253, 244, 0.75);
+  box-shadow: 0 8px 18px rgba(76, 48, 20, 0.28);
+  animation: manager-button-colors 6s ease-in-out infinite;
+}
+
+@keyframes manager-button-colors {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-link {
+    animation: none;
+  }
 }
 
 .topbar {
@@ -184,11 +206,11 @@ textarea:focus {
 
 .eyebrow {
   margin: 0;
-  color: #593817;
-  font-size: 1.65rem;
-  font-weight: 800;
+  color: #3d1f12;
+  font-size: 1.9rem;
+  font-weight: 900;
   letter-spacing: 0;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 0 #fffdf4, 0 2px 0 #d6a447, 0 4px 6px rgba(58, 34, 16, 0.38);
 }
 
 .brand-location {
@@ -196,10 +218,11 @@ textarea:focus {
   margin: 8px 0 0;
   padding: 7px 0 0;
   border-top: 1px solid rgba(181, 138, 67, 0.75);
-  color: #a87524;
-  font-size: 1.15rem;
+  color: #5a3819;
+  font-size: 1.25rem;
   font-weight: 900;
   letter-spacing: 0;
+  text-shadow: 0 1px 0 #fffdf4, 0 2px 3px rgba(58, 34, 16, 0.35);
   box-shadow: none;
 }
 
