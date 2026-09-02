@@ -184,11 +184,16 @@ textarea:focus {
 
 .eyebrow {
   margin: 0;
-  color: #3d1f12;
+  background: linear-gradient(110deg, #70420f 10%, #d6a447 35%, #fff2a8 50%, #b87916 65%, #70420f 90%);
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   font-size: 1.9rem;
   font-weight: 900;
   letter-spacing: 0;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  animation: gold-shimmer 5s linear infinite;
 }
 
 .brand-location {
@@ -196,12 +201,31 @@ textarea:focus {
   margin: 8px 0 0;
   padding: 7px 0 0;
   border-top: 1px solid rgba(181, 138, 67, 0.75);
-  color: #5a3819;
+  background: linear-gradient(110deg, #70420f 10%, #d6a447 35%, #fff2a8 50%, #b87916 65%, #70420f 90%);
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   font-size: 1.25rem;
   font-weight: 900;
   letter-spacing: 0;
   text-shadow: none;
   box-shadow: none;
+}
+
+@keyframes gold-shimmer {
+  from {
+    background-position: 220% center;
+  }
+  to {
+    background-position: -20% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow {
+    animation: none;
+  }
 }
 
 h1,
