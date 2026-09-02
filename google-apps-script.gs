@@ -46,16 +46,35 @@ function doPost(event) {
   const data = JSON.parse(event.postData.contents);
   const sheet = getSheet_();
   ensureHeader_(sheet);
-  sheet.appendRow([
-    data.id || Utilities.getUuid(),
-    new Date(),
-    data.name || "",
-    data.phone || "",
-    data.product || "",
-    Number(data.quantity) || 1,
-    Boolean(data.deliveryRequired),
-    data.deliveryAddress || "",
-  ]);
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+
+  try {
+    const orderId = String(data.id || Utilities.getUuid());
+    const rowCount = sheet.getLastRow() - 1;
+    const existingIds = rowCount > 0
+      ? sheet.getRange(2, 1, rowCount, 1).getValues().flat().map((value) => String(value))
+      : [];
+
+    if (existingIds.includes(orderId)) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: true, duplicate: true }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    sheet.appendRow([
+      orderId,
+      new Date(),
+      data.name || "",
+      data.phone || "",
+      data.product || "",
+      Number(data.quantity) || 1,
+      Boolean(data.deliveryRequired),
+      data.deliveryAddress || "",
+    ]);
+  } finally {
+    lock.releaseLock();
+  }
 
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
