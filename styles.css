@@ -126,13 +126,15 @@ textarea:focus {
 
 .delivery-note {
   position: relative;
-  margin: 18px 0 0;
-  padding: 16px 18px 16px 48px;
+  display: block;
+  width: 100%;
+  margin: 18px auto 0;
+  padding: 17px 52px;
   color: #315b3b;
   background: linear-gradient(135deg, #fff9e8, #edf5df);
   border: 2px solid #d6a447;
   border-radius: 14px;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   font-weight: 900;
   text-align: center;
   box-shadow: 0 10px 22px rgba(49, 91, 59, 0.16);
@@ -176,10 +178,9 @@ textarea:focus {
 .eyebrow {
   margin: 0 0 6px;
   color: var(--muted);
-  font-size: 0.76rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 h1,
@@ -452,6 +453,10 @@ tbody tr:hover {
 
   .summary-cards {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .eyebrow {
+    font-size: 1.1rem;
   }
 
 }
