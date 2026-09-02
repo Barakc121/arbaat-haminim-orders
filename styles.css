@@ -195,16 +195,14 @@ textarea:focus {
 
 .brand-location {
   display: inline-block;
-  margin: 10px 0 0;
-  padding: 6px 14px;
-  border: 2px solid var(--accent);
-  border-radius: 999px;
-  background: linear-gradient(135deg, #fff9e8, #edf5df);
-  color: #6a431d;
-  font-size: 1.15rem;
+  margin: 8px 0 0;
+  padding: 7px 0 0;
+  border-top: 1px solid rgba(181, 138, 67, 0.75);
+  color: #a87524;
+  font-size: 1.2rem;
   font-weight: 900;
   letter-spacing: 0;
-  box-shadow: 0 5px 12px rgba(49, 91, 59, 0.12);
+  text-shadow: 0 1px 0 #fff9e8, 0 2px 4px rgba(104, 66, 16, 0.25);
 }
 
 h1,
