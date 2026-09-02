@@ -33,7 +33,7 @@ body {
 body[data-mode="public"] {
   background:
     linear-gradient(rgba(33, 26, 16, 0.25), rgba(33, 26, 16, 0.25)),
-    url("https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1600&q=80") center/cover fixed no-repeat;
+    url("https://www.amhazak.com/_next/image?url=https%3A%2F%2Fapi.amhazak.com%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fholiday-images%2Fsukkot.jpg&w=3840&q=75") center/cover fixed no-repeat;
 }
 
 body[data-mode="admin"] {
