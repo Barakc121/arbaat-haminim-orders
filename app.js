@@ -498,6 +498,7 @@ form.addEventListener("submit", async (event) => {
     submitBtn.disabled = true;
     submitBtn.textContent = "שולח...";
   }
+  showOrderStatus("קיבלנו את הפרטים, שולח את ההזמנה...");
 
   try {
     const sentToServer = await sendOrderToServer(order);
@@ -532,11 +533,7 @@ form.addEventListener("submit", async (event) => {
   customerNameInput.focus();
 
   if (pageMode === "public") {
-    alert(
-      hasOrdersApi()
-        ? "ההזמנה התקבלה! ניצור איתך קשר בהקדם."
-        : "ההזמנה נשמרה במכשיר זה בלבד. יש להגדיר חיבור לשרת.",
-    );
+    return;
   }
 
   if (pageMode === "admin") {
