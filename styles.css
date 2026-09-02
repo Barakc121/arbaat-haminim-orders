@@ -488,7 +488,7 @@ button:disabled {
 
 .stat-card strong {
   display: block;
-  font-size: clamp(1.5rem, 1.8vw, 2.1rem);
+  font-size: clamp(1.8rem, 1.8vw, 2.1rem);
   color: var(--primary-dark);
   line-height: 1;
 }
