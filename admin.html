@@ -3,31 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ארבעת המינים - הזמנה</title>
+    <title>ארבעת המינים - ניהול</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-mode="public">
-    <div class="app-shell public-shell">
+  <body data-mode="admin">
+    <div class="app-shell">
       <header class="topbar">
         <div class="brand-wrap">
           <div class="brand-mark">4</div>
           <div>
-            <p class="eyebrow">הזמנת יהלומים</p>
+            <p class="eyebrow">ניהול הזמנות</p>
             <h1>ארבעת המינים</h1>
           </div>
         </div>
-        <a href="admin.html" class="ghost-btn small-btn admin-link">כניסה למנהל</a>
+        <div class="header-actions">
+          <span class="status-pill">אזור מנהל</span>
+          <button id="resetDataBtn" class="ghost-btn">אפס נתונים</button>
+        </div>
       </header>
 
-      <main class="public-panel">
-        <section class="panel form-panel public-form-panel">
-          <h2>הזמנה</h2>
-          <p class="public-subtitle">מלא את הפרטים וההזמנה תישמר אצלנו</p>
+      <main class="dashboard">
+        <section class="panel form-panel">
+          <h2>הוספת הזמנה</h2>
 
           <form id="orderForm">
             <div class="field-grid">
               <label>
-                <span>שם מלא</span>
+                <span>שם לקוח</span>
                 <input id="customerName" name="customerName" type="text" placeholder="לדוגמה: אבי כהן" required />
               </label>
 
@@ -61,9 +63,58 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="primary-btn">שלח הזמנה</button>
+              <button type="submit" class="primary-btn">הוסף להזמנות</button>
+              <button type="button" id="loadGoogleSheetBtn" class="ghost-btn small-btn">טען מגוגל שיטס</button>
+              <label class="upload-btn">
+                <input id="csvFileInput" type="file" accept=".csv,text/csv" />
+                <span>ייבא CSV</span>
+              </label>
             </div>
           </form>
+        </section>
+
+        <section class="panel summary-panel">
+          <h2>סיכום</h2>
+          <div id="summaryCards" class="summary-cards"></div>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="section-header">
+            <h2>הזמנות</h2>
+            <button id="downloadCsvBtn" class="ghost-btn small-btn">הורד CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>שם</th>
+                  <th>טלפון</th>
+                  <th>סוג</th>
+                  <th>כמות</th>
+                  <th>הערות</th>
+                  <th>מחיקה</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel table-panel">
+          <h2>סיכום לפי לקוח</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>שם לקוח</th>
+                  <th>טלפון</th>
+                  <th>מוצרים</th>
+                  <th>כמות כוללת</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody"></tbody>
+            </table>
+          </div>
         </section>
       </main>
     </div>
