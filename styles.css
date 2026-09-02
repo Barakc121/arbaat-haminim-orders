@@ -176,11 +176,22 @@ textarea:focus {
 }
 
 .eyebrow {
-  margin: 0 0 6px;
+  margin: 0;
   color: var(--muted);
-  font-size: 1.8rem;
+  font-size: 1.65rem;
   font-weight: 800;
   letter-spacing: 0;
+}
+
+.brand-location {
+  display: inline-block;
+  margin: 5px 0 0;
+  padding-top: 5px;
+  border-top: 2px solid var(--accent);
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
 }
 
 h1,
@@ -456,7 +467,11 @@ tbody tr:hover {
   }
 
   .eyebrow {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
+  }
+
+  .brand-location {
+    font-size: 0.9rem;
   }
 
 }
