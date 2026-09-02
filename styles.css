@@ -289,6 +289,12 @@ button:hover {
   transform: translateY(-1px);
 }
 
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
+}
+
 .primary-btn {
   background: linear-gradient(135deg, var(--primary), #8b4d28);
   color: #fff;

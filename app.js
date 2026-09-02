@@ -36,6 +36,8 @@ const resetBtn = document.getElementById("resetDataBtn");
 const exportBtn = document.getElementById("downloadCsvBtn");
 const googleSheetBtn = document.getElementById("loadGoogleSheetBtn");
 const pageMode = document.body.dataset.mode;
+const submitBtn = form?.querySelector('button[type="submit"]');
+let isSubmitting = false;
 
 function toggleDeliveryFields() {
   if (!needsDeliveryInput) return;
@@ -463,6 +465,7 @@ function escapeHtml(value) {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (isSubmitting) return;
 
   if (needsDeliveryInput && needsDeliveryInput.checked && !normalizeText(deliveryAddressInput?.value)) {
     showOrderStatus("יש למלא כתובת למשלוח");
@@ -490,6 +493,12 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
+  isSubmitting = true;
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "שולח...";
+  }
+
   try {
     const sentToServer = await sendOrderToServer(order);
     state.orders.push(order);
@@ -506,6 +515,12 @@ form.addEventListener("submit", async (event) => {
     showOrderStatus("ההזמנה לא נשלחה. נסה שוב בעוד רגע.");
     alert("לא הצלחנו לשלוח את ההזמנה. נסה שוב.");
     return;
+  } finally {
+    isSubmitting = false;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = pageMode === "admin" ? "הוסף להזמנות" : "שלח הזמנה";
+    }
   }
 
   form.reset();
@@ -595,7 +610,15 @@ if (exportBtn) exportBtn.addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
-if (googleSheetBtn) googleSheetBtn.addEventListener("click", loadGoogleSheetData);
+if (googleSheetBtn) {
+  googleSheetBtn.addEventListener("click", () => {
+    if (hasOrdersApi()) {
+      loadOrdersFromServer();
+    } else {
+      loadGoogleSheetData();
+    }
+  });
+}
 
 if (pageMode === "admin") loadOrdersFromServer();
 
