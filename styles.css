@@ -125,10 +125,16 @@ textarea:focus {
 }
 
 .delivery-note {
-  margin: 12px 0 0;
+  margin: 18px 0 0;
+  padding: 13px 16px;
   color: var(--primary);
-  font-weight: 800;
+  background: rgba(216, 155, 91, 0.16);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 900;
   text-align: center;
+  box-shadow: 0 8px 18px rgba(108, 52, 26, 0.1);
 }
 
 .admin-link {
