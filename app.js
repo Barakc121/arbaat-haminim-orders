@@ -59,6 +59,27 @@ if (needsDeliveryInput) {
   toggleDeliveryFields();
 }
 
+document.querySelectorAll(".floating-etrog").forEach((etrog) => {
+  const moveEtrog = () => {
+    const horizontalPosition = Math.round(8 + Math.random() * 76);
+    const verticalPosition = Math.round(20 + Math.random() * 65);
+    etrog.style.left = `${horizontalPosition}%`;
+    etrog.style.right = "auto";
+    etrog.style.top = `${verticalPosition}%`;
+    etrog.classList.remove("is-jumping");
+    void etrog.offsetWidth;
+    etrog.classList.add("is-jumping");
+  };
+
+  etrog.addEventListener("click", moveEtrog);
+  etrog.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      moveEtrog();
+    }
+  });
+});
+
 state.orders = loadOrders();
 
 if (pageMode === "admin") {

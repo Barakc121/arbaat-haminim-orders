@@ -46,6 +46,83 @@ body[data-mode="admin"] {
   display: none !important;
 }
 
+.public-panel {
+  position: relative;
+}
+
+.floating-etrog {
+  position: fixed;
+  z-index: 10;
+  display: block;
+  pointer-events: auto;
+  user-select: none;
+  cursor: pointer;
+  font-size: 2.8rem;
+  line-height: 1;
+  opacity: 0.95;
+  filter: drop-shadow(0 8px 8px rgba(61, 31, 18, 0.34));
+  text-shadow: 0 2px 0 #fff2a8, 0 5px 8px rgba(61, 31, 18, 0.4);
+  animation: floating-etrog 7s ease-in-out infinite;
+  transition: top 0.45s ease, right 0.45s ease, left 0.45s ease;
+}
+
+.floating-etrog:focus-visible {
+  outline: 3px solid #d6a447;
+  outline-offset: 5px;
+  border-radius: 50%;
+}
+
+.floating-etrog.is-jumping {
+  animation: etrog-jump 0.65s ease-out;
+}
+
+.etrog-one {
+  top: 24%;
+  right: 7%;
+}
+
+.etrog-two {
+  top: 58%;
+  left: 6%;
+  font-size: 2.3rem;
+  animation-delay: -2.3s;
+}
+
+.etrog-three {
+  top: 78%;
+  right: 12%;
+  font-size: 2rem;
+  animation-delay: -4.1s;
+}
+
+@keyframes floating-etrog {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) rotate(8deg);
+  }
+}
+
+@keyframes etrog-jump {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  45% {
+    transform: scale(1.45) rotate(24deg) translateY(-20px);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-etrog {
+    animation: none;
+  }
+}
+
 .checkbox-field {
   display: flex;
   flex-direction: row !important;
@@ -156,6 +233,8 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(181, 138, 67, 0.75);
+  box-shadow: 0 6px 14px rgba(58, 45, 30, 0.16);
 }
 
 .topbar {
@@ -168,12 +247,10 @@ textarea:focus {
   margin-bottom: 24px;
   padding: 28px 34px;
   overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(255, 249, 232, 0.95), rgba(255, 249, 232, 0.72)),
-    url("https://www.amhazak.com/_next/image?url=https%3A%2F%2Fapi.amhazak.com%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fholiday-images%2Fsukkot.jpg&w=3840&q=75") center/cover;
+  background: linear-gradient(135deg, #eef0ef 0%, #cbd1cf 52%, #e4e7e6 100%);
   border: 2px solid #b58a43;
   border-radius: 24px;
-  box-shadow: 0 16px 34px rgba(88, 61, 23, 0.2);
+  box-shadow: 0 16px 34px rgba(58, 45, 30, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .brand-wrap {
@@ -184,12 +261,12 @@ textarea:focus {
 
 .eyebrow {
   margin: 0;
-  background: linear-gradient(110deg, #70420f 10%, #d6a447 35%, #fff2a8 50%, #b87916 65%, #70420f 90%);
+  background: linear-gradient(110deg, #17130e 8%, #8a5b17 25%, #f0c85a 42%, #fff3a6 50%, #a66e16 63%, #17130e 90%);
   background-size: 220% auto;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 1.9rem;
+  font-size: 2.3rem;
   font-weight: 900;
   letter-spacing: 0;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
@@ -201,12 +278,12 @@ textarea:focus {
   margin: 8px 0 0;
   padding: 7px 0 0;
   border-top: 1px solid rgba(181, 138, 67, 0.75);
-  background: linear-gradient(110deg, #70420f 10%, #d6a447 35%, #fff2a8 50%, #b87916 65%, #70420f 90%);
+  background: linear-gradient(110deg, #17130e 8%, #8a5b17 25%, #f0c85a 42%, #fff3a6 50%, #a66e16 63%, #17130e 90%);
   background-size: 220% auto;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 900;
   letter-spacing: 0;
   text-shadow: none;
@@ -501,7 +578,7 @@ tbody tr:hover {
   }
 
   .eyebrow {
-    font-size: 1.35rem;
+    font-size: 1.8rem;
   }
 
   .brand-location {
