@@ -1,6 +1,7 @@
 const STORAGE_KEY = "arbaat-haminim-orders-v2";
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKXTurywqKCwdpag0pR4sg3WLISAptW8M6CB0HIhXhjIXyWycbzC7onXOBXwfmUvWOKwIBquSkY9L7/pub?output=csv&gid=0";
+const ORDERS_API_URL = "PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 const ADMIN_PASSWORD = "325276319";
 const state = {
   orders: [],
@@ -85,6 +86,45 @@ function loadOrders() {
 
 function saveOrders() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.orders));
+}
+
+function hasOrdersApi() {
+  return ORDERS_API_URL.startsWith("https://") && !ORDERS_API_URL.includes("PASTE_");
+}
+
+async function sendOrderToServer(order) {
+  if (!hasOrdersApi()) return false;
+
+  const response = await fetch(ORDERS_API_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(order),
+  });
+
+  return response.type === "opaque" || response.ok;
+}
+
+async function loadOrdersFromServer() {
+  if (!hasOrdersApi()) return;
+
+  try {
+    const response = await fetch(`${ORDERS_API_URL}?action=list`, {
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error(`Orders request failed: ${response.status}`);
+
+    const payload = await response.json();
+    const orders = Array.isArray(payload) ? payload : payload.orders;
+    if (!Array.isArray(orders)) throw new Error("Invalid orders response");
+
+    state.orders = orders;
+    saveOrders();
+    render();
+  } catch (error) {
+    console.error("Failed to load orders from server:", error);
+    showOrderStatus("לא ניתן לטעון הזמנות מהשרת");
+  }
 }
 
 function normalizeText(value) {
@@ -421,7 +461,7 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (needsDeliveryInput && needsDeliveryInput.checked && !normalizeText(deliveryAddressInput?.value)) {
@@ -450,9 +490,24 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  state.orders.push(order);
-  saveOrders();
-  render();
+  try {
+    const sentToServer = await sendOrderToServer(order);
+    state.orders.push(order);
+    saveOrders();
+    render();
+
+    if (sentToServer) {
+      showOrderStatus("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");
+    } else {
+      showOrderStatus("ההזמנה נשמרה במכשיר זה בלבד. יש להגדיר חיבור לשרת.");
+    }
+  } catch (error) {
+    console.error("Failed to send order:", error);
+    showOrderStatus("ההזמנה לא נשלחה. נסה שוב בעוד רגע.");
+    alert("לא הצלחנו לשלוח את ההזמנה. נסה שוב.");
+    return;
+  }
+
   form.reset();
   quantityInput.value = "1";
   if (needsDeliveryInput) {
@@ -462,8 +517,11 @@ form.addEventListener("submit", (event) => {
   customerNameInput.focus();
 
   if (pageMode === "public") {
-    showOrderStatus("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");
-    alert("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");
+    alert(
+      hasOrdersApi()
+        ? "ההזמנה התקבלה! ניצור איתך קשר בהקדם."
+        : "ההזמנה נשמרה במכשיר זה בלבד. יש להגדיר חיבור לשרת.",
+    );
   }
 
   if (pageMode === "admin") {
@@ -538,5 +596,7 @@ if (exportBtn) exportBtn.addEventListener("click", () => {
 });
 
 if (googleSheetBtn) googleSheetBtn.addEventListener("click", loadGoogleSheetData);
+
+if (pageMode === "admin") loadOrdersFromServer();
 
 render();
