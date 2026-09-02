@@ -178,7 +178,7 @@ textarea:focus {
 .eyebrow {
   margin: 0 0 6px;
   color: var(--muted);
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   letter-spacing: 0;
 }
@@ -456,7 +456,7 @@ tbody tr:hover {
   }
 
   .eyebrow {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
   }
 
 }
