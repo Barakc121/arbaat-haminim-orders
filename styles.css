@@ -163,19 +163,6 @@ textarea:focus {
   gap: 14px;
 }
 
-.brand-mark {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--primary), #94552d);
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-size: 1.7rem;
-  font-weight: 800;
-  box-shadow: 0 10px 20px rgba(108, 52, 26, 0.2);
-}
-
 .eyebrow {
   margin: 0 0 6px;
   color: var(--muted);
