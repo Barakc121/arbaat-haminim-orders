@@ -1,9 +1,7 @@
-const STORAGE_KEY = "arbaat-haminim-orders-v1";
+const STORAGE_KEY = "arbaat-haminim-orders-v2";
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKXTurywqKCwdpag0pR4sg3WLISAptW8M6CB0HIhXhjIXyWycbzC7onXOBXwfmUvWOKwIBquSkY9L7/pub?output=csv&gid=0";
 const ADMIN_PASSWORD = "325276319";
-
-localStorage.removeItem(STORAGE_KEY);
 
 const state = {
   orders: [],
@@ -269,6 +267,8 @@ function findHeaderIndex(headerMap, candidates) {
 }
 
 function renderSummary() {
+  if (!summaryCards) return;
+
   const totalsByProduct = {};
   let totalItems = 0;
 
@@ -301,6 +301,8 @@ function renderSummary() {
 }
 
 function renderOrders() {
+  if (!ordersTableBody) return;
+
   if (!state.orders.length) {
     ordersTableBody.innerHTML =
       '<tr><td colspan="8" class="empty-state">עדיין אין הזמנות</td></tr>';
@@ -335,6 +337,8 @@ function renderOrders() {
 }
 
 function renderCustomers() {
+  if (!customersTableBody) return;
+
   const customerMap = new Map();
 
   for (const order of state.orders) {
@@ -460,7 +464,7 @@ form.addEventListener("submit", (event) => {
   }
 });
 
-csvInput.addEventListener("change", (event) => {
+if (csvInput) csvInput.addEventListener("change", (event) => {
   const file = event.target.files?.[0];
   if (!file) return;
 
@@ -484,7 +488,7 @@ csvInput.addEventListener("change", (event) => {
   reader.readAsText(file);
 });
 
-resetBtn.addEventListener("click", () => {
+if (resetBtn) resetBtn.addEventListener("click", () => {
   const confirmed = window.confirm("האם למחוק את כל ההזמנות?");
   if (!confirmed) return;
 
@@ -494,7 +498,7 @@ resetBtn.addEventListener("click", () => {
   render();
 });
 
-exportBtn.addEventListener("click", () => {
+if (exportBtn) exportBtn.addEventListener("click", () => {
   if (!state.orders.length) {
     alert("אין הזמנות לייצוא");
     return;
@@ -525,7 +529,6 @@ exportBtn.addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
-googleSheetBtn.addEventListener("click", loadGoogleSheetData);
+if (googleSheetBtn) googleSheetBtn.addEventListener("click", loadGoogleSheetData);
 
-loadGoogleSheetData();
 render();
