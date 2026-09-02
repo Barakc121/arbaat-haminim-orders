@@ -1,7 +1,7 @@
 const STORAGE_KEY = "arbaat-haminim-orders-v2";
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKXTurywqKCwdpag0pR4sg3WLISAptW8M6CB0HIhXhjIXyWycbzC7onXOBXwfmUvWOKwIBquSkY9L7/pub?output=csv&gid=0";
-const ORDERS_API_URL = "PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const ORDERS_API_URL = "https://script.google.com/macros/s/AKfycbyvyYsBneX50VaKTu7a09srH7uYPa6OVn1FjhFe4n1TiZ0F2JrjrSFRST_10bT9srNDgQ/exec";
 const ADMIN_PASSWORD = "325276319";
 const state = {
   orders: [],
