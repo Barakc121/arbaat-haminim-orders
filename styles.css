@@ -125,16 +125,26 @@ textarea:focus {
 }
 
 .delivery-note {
+  position: relative;
   margin: 18px 0 0;
-  padding: 13px 16px;
-  color: var(--primary);
-  background: rgba(216, 155, 91, 0.16);
-  border: 2px solid var(--accent);
-  border-radius: 12px;
-  font-size: 1.05rem;
+  padding: 16px 18px 16px 48px;
+  color: #315b3b;
+  background: linear-gradient(135deg, #fff9e8, #edf5df);
+  border: 2px solid #d6a447;
+  border-radius: 14px;
+  font-size: 1.1rem;
   font-weight: 900;
   text-align: center;
-  box-shadow: 0 8px 18px rgba(108, 52, 26, 0.1);
+  box-shadow: 0 10px 22px rgba(49, 91, 59, 0.16);
+}
+
+.delivery-note::before {
+  content: "🍋";
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 1.45rem;
 }
 
 .admin-link {
