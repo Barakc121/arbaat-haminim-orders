@@ -156,28 +156,6 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #fffdf4;
-  background: linear-gradient(120deg, #6c341a, #b58a43, #315b3b, #6c341a);
-  background-size: 300% 300%;
-  border: 1px solid rgba(255, 253, 244, 0.75);
-  box-shadow: 0 8px 18px rgba(76, 48, 20, 0.28);
-  animation: manager-button-colors 6s ease-in-out infinite;
-}
-
-@keyframes manager-button-colors {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .admin-link {
-    animation: none;
-  }
 }
 
 .topbar {
