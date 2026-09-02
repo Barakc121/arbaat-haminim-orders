@@ -27,6 +27,7 @@ const quantityInput = document.getElementById("quantity");
 const needsDeliveryInput = document.getElementById("needsDelivery");
 const deliveryAddressField = document.getElementById("deliveryAddressField");
 const deliveryAddressInput = document.getElementById("deliveryAddress");
+const orderStatus = document.getElementById("orderStatus");
 const ordersTableBody = document.getElementById("ordersTableBody");
 const customersTableBody = document.getElementById("customersTableBody");
 const summaryCards = document.getElementById("summaryCards");
@@ -45,6 +46,10 @@ function toggleDeliveryFields() {
   if (deliveryAddressInput && !shouldShow) {
     deliveryAddressInput.value = "";
   }
+}
+
+function showOrderStatus(message) {
+  if (orderStatus) orderStatus.textContent = message;
 }
 
 if (needsDeliveryInput) {
@@ -421,6 +426,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   if (needsDeliveryInput && needsDeliveryInput.checked && !normalizeText(deliveryAddressInput?.value)) {
+    showOrderStatus("יש למלא כתובת למשלוח");
     alert("אנא כתוב כתובת משלוח מלאה");
     return;
   }
@@ -440,6 +446,7 @@ form.addEventListener("submit", (event) => {
   };
 
   if (!order.name || !order.phone || !order.product) {
+    showOrderStatus("יש למלא את כל השדות");
     alert("אנא מלא כל השדות");
     return;
   }
@@ -456,10 +463,12 @@ form.addEventListener("submit", (event) => {
   customerNameInput.focus();
 
   if (pageMode === "public") {
+    showOrderStatus("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");
     alert("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");
   }
 
   if (pageMode === "admin") {
+    showOrderStatus("ההזמנה נוספה בהצלחה.");
     alert("ההזמנה נוספה בהצלחה! המשך בניהול ההזמנות.");
   }
 });

@@ -117,6 +117,13 @@ textarea:focus {
   color: var(--muted);
 }
 
+.order-status {
+  min-height: 24px;
+  margin: 16px 0 0;
+  color: var(--success);
+  font-weight: 800;
+}
+
 .admin-link {
   text-decoration: none;
   display: inline-flex;
