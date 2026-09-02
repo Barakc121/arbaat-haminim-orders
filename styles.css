@@ -150,6 +150,8 @@ textarea:focus {
 }
 
 .admin-link {
+  position: relative;
+  z-index: 1;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -157,19 +159,26 @@ textarea:focus {
 }
 
 .topbar {
+  position: relative;
+  min-height: 178px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
-  padding: 18px 20px;
-  background: rgba(255, 250, 244, 0.75);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  box-shadow: var(--shadow);
+  padding: 28px 34px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 249, 232, 0.95), rgba(255, 249, 232, 0.72)),
+    url("https://www.amhazak.com/_next/image?url=https%3A%2F%2Fapi.amhazak.com%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fholiday-images%2Fsukkot.jpg&w=3840&q=75") center/cover;
+  border: 2px solid #b58a43;
+  border-radius: 24px;
+  box-shadow: 0 16px 34px rgba(88, 61, 23, 0.2);
 }
 
 .brand-wrap {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -177,10 +186,11 @@ textarea:focus {
 
 .eyebrow {
   margin: 0;
-  color: var(--muted);
-  font-size: 1.65rem;
-  font-weight: 800;
+  color: #593817;
+  font-size: 2rem;
+  font-weight: 900;
   letter-spacing: 0;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .brand-location {
@@ -190,8 +200,8 @@ textarea:focus {
   border: 2px solid var(--accent);
   border-radius: 999px;
   background: linear-gradient(135deg, #fff9e8, #edf5df);
-  color: #315b3b;
-  font-size: 1.2rem;
+  color: #6a431d;
+  font-size: 1.15rem;
   font-weight: 900;
   letter-spacing: 0;
   box-shadow: 0 5px 12px rgba(49, 91, 59, 0.12);
