@@ -7,3 +7,6 @@ Thumbs.db
 
 # Local runtime
 *.log
+
+# Separate friend's project
+friend-harbahat-haminim/
