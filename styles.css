@@ -247,7 +247,21 @@ textarea:focus {
 }
 
 .cart-summary li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin: 6px 0;
+}
+
+.remove-pending-btn {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid rgba(178, 63, 63, 0.35);
+  border-radius: 8px;
+  background: rgba(178, 63, 63, 0.1);
+  color: var(--danger);
+  font-size: 0.82rem;
 }
 
 .admin-link {

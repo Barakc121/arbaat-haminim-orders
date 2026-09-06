@@ -101,10 +101,21 @@ function renderCartSummary() {
     <h3>סיכום ההזמנה (${pendingOrders.length} פריטים, ${totalItems} יחידות)</h3>
     <ul>
       ${pendingOrders
-        .map((order, index) => `<li>${index + 1}. ${escapeHtml(order.product)} × ${order.quantity}</li>`)
+        .map(
+          (order, index) =>
+            `<li><span>${index + 1}. ${escapeHtml(order.product)} × ${order.quantity}</span><button type="button" class="remove-pending-btn" data-index="${index}">הסר</button></li>`,
+        )
         .join("")}
     </ul>
   `;
+
+  cartSummary.querySelectorAll(".remove-pending-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      pendingOrders.splice(Number(button.dataset.index), 1);
+      renderCartSummary();
+      showOrderStatus("הפריט הוסר מהסיכום.");
+    });
+  });
 }
 
 function resetProductFields() {
