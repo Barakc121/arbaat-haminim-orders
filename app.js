@@ -38,6 +38,7 @@ const googleSheetBtn = document.getElementById("loadGoogleSheetBtn");
 const pageMode = document.body.dataset.mode;
 const submitBtn = form?.querySelector('button[type="submit"]');
 const addOrderBtn = document.getElementById("addOrderBtn");
+const clearCurrentOrderBtn = document.getElementById("clearCurrentOrderBtn");
 const cartSummary = document.getElementById("cartSummary");
 const pendingOrders = [];
 let isSubmitting = false;
@@ -123,6 +124,13 @@ function renderCartSummary() {
 function resetProductFields() {
   productTypeInput.value = "";
   quantityInput.value = "1";
+}
+
+if (clearCurrentOrderBtn) {
+  clearCurrentOrderBtn.addEventListener("click", () => {
+    resetProductFields();
+    showOrderStatus("הבחירה הנוכחית נוקתה.");
+  });
 }
 
 if (needsDeliveryInput) {
