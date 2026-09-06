@@ -43,6 +43,8 @@ const cartSummary = document.getElementById("cartSummary");
 const pendingOrders = [];
 let isSubmitting = false;
 
+if (form) form.noValidate = true;
+
 function toggleDeliveryFields() {
   if (!needsDeliveryInput) return;
   const shouldShow = needsDeliveryInput.checked;
@@ -581,6 +583,11 @@ form.addEventListener("submit", async (event) => {
   if (isSubmitting) return;
 
   const hasCurrentProduct = normalizeText(productTypeInput.value);
+  if (!pendingOrders.length && (!normalizeText(customerNameInput.value) || !normalizeText(customerPhoneInput.value))) {
+    showOrderStatus("יש למלא שם וטלפון");
+    alert("אנא מלא שם וטלפון");
+    return;
+  }
   const currentOrder = hasCurrentProduct ? createOrderFromForm() : null;
   if (!currentOrder && !pendingOrders.length) {
     showOrderStatus("יש להוסיף הזמנה לפני השליחה");
