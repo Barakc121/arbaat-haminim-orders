@@ -75,6 +75,7 @@
             </div>
 
             <div class="actions">
+              <button type="button" id="addOrderBtn" class="ghost-btn">הוסף הזמנה נוספת</button>
               <button type="submit" class="primary-btn">הוסף להזמנות</button>
               <button type="button" id="loadGoogleSheetBtn" class="ghost-btn small-btn">טען מגוגל שיטס</button>
               <label class="upload-btn">
@@ -82,6 +83,7 @@
                 <span>ייבא CSV</span>
               </label>
             </div>
+            <div id="cartSummary" class="cart-summary hidden" aria-live="polite"></div>
             <p id="orderStatus" class="order-status" role="status" aria-live="polite"></p>
           </form>
         </section>

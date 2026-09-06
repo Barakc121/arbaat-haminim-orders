@@ -37,6 +37,9 @@ const exportBtn = document.getElementById("downloadCsvBtn");
 const googleSheetBtn = document.getElementById("loadGoogleSheetBtn");
 const pageMode = document.body.dataset.mode;
 const submitBtn = form?.querySelector('button[type="submit"]');
+const addOrderBtn = document.getElementById("addOrderBtn");
+const cartSummary = document.getElementById("cartSummary");
+const pendingOrders = [];
 let isSubmitting = false;
 
 function toggleDeliveryFields() {
@@ -54,9 +57,77 @@ function showOrderStatus(message) {
   if (orderStatus) orderStatus.textContent = message;
 }
 
+function createOrderFromForm() {
+  if (needsDeliveryInput && needsDeliveryInput.checked && !normalizeText(deliveryAddressInput?.value)) {
+    showOrderStatus("יש למלא כתובת למשלוח");
+    alert("אנא כתוב כתובת משלוח מלאה");
+    return null;
+  }
+
+  const order = {
+    id: Date.now() + Math.random(),
+    name: normalizeText(customerNameInput.value),
+    phone: normalizeText(customerPhoneInput.value),
+    product: getCanonicalProduct(productTypeInput.value),
+    quantity: parseNumber(quantityInput.value),
+    note: "",
+    deliveryRequired: Boolean(needsDeliveryInput && needsDeliveryInput.checked),
+    deliveryAddress:
+      needsDeliveryInput && needsDeliveryInput.checked
+        ? normalizeText(deliveryAddressInput.value)
+        : "",
+  };
+
+  if (!order.name || !order.phone || !normalizeText(productTypeInput.value)) {
+    showOrderStatus("יש למלא שם, טלפון וסוג סט");
+    alert("אנא מלא שם, טלפון וסוג סט");
+    return null;
+  }
+
+  return order;
+}
+
+function renderCartSummary() {
+  if (!cartSummary) return;
+  if (!pendingOrders.length) {
+    cartSummary.classList.add("hidden");
+    cartSummary.innerHTML = "";
+    return;
+  }
+
+  const totalItems = pendingOrders.reduce((total, order) => total + order.quantity, 0);
+  cartSummary.classList.remove("hidden");
+  cartSummary.innerHTML = `
+    <h3>סיכום ההזמנה (${pendingOrders.length} פריטים, ${totalItems} יחידות)</h3>
+    <ul>
+      ${pendingOrders
+        .map((order, index) => `<li>${index + 1}. ${escapeHtml(order.product)} × ${order.quantity}</li>`)
+        .join("")}
+    </ul>
+  `;
+}
+
+function resetProductFields() {
+  productTypeInput.value = "";
+  quantityInput.value = "1";
+}
+
 if (needsDeliveryInput) {
   needsDeliveryInput.addEventListener("change", toggleDeliveryFields);
   toggleDeliveryFields();
+}
+
+if (addOrderBtn) {
+  addOrderBtn.addEventListener("click", () => {
+    if (isSubmitting) return;
+    const order = createOrderFromForm();
+    if (!order) return;
+
+    pendingOrders.push(order);
+    resetProductFields();
+    renderCartSummary();
+    showOrderStatus("ההזמנה נוספה לסיכום. אפשר להוסיף עוד או לשלוח הכול.");
+  });
 }
 
 document.querySelectorAll(".floating-etrog").forEach((etrog) => {
@@ -487,32 +558,9 @@ function escapeHtml(value) {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (isSubmitting) return;
-
-  if (needsDeliveryInput && needsDeliveryInput.checked && !normalizeText(deliveryAddressInput?.value)) {
-    showOrderStatus("יש למלא כתובת למשלוח");
-    alert("אנא כתוב כתובת משלוח מלאה");
-    return;
-  }
-
-  const order = {
-    id: Date.now() + Math.random(),
-    name: normalizeText(customerNameInput.value),
-    phone: normalizeText(customerPhoneInput.value),
-    product: getCanonicalProduct(productTypeInput.value),
-    quantity: parseNumber(quantityInput.value),
-    note: "",
-    deliveryRequired: Boolean(needsDeliveryInput && needsDeliveryInput.checked),
-    deliveryAddress:
-      needsDeliveryInput && needsDeliveryInput.checked
-        ? normalizeText(deliveryAddressInput.value)
-        : "",
-  };
-
-  if (!order.name || !order.phone || !order.product) {
-    showOrderStatus("יש למלא את כל השדות");
-    alert("אנא מלא כל השדות");
-    return;
-  }
+  const currentOrder = createOrderFromForm();
+  if (!currentOrder) return;
+  const ordersToSend = [...pendingOrders, currentOrder];
 
   isSubmitting = true;
   if (submitBtn) {
@@ -522,10 +570,15 @@ form.addEventListener("submit", async (event) => {
   showOrderStatus("קיבלנו את הפרטים, שולח את ההזמנה...");
 
   try {
-    const sentToServer = await sendOrderToServer(order);
-    state.orders.push(order);
+    let sentToServer = true;
+    for (const order of ordersToSend) {
+      sentToServer = (await sendOrderToServer(order)) && sentToServer;
+    }
+    state.orders.push(...ordersToSend);
     saveOrders();
     render();
+    pendingOrders.length = 0;
+    renderCartSummary();
 
     if (sentToServer) {
       showOrderStatus("ההזמנה התקבלה! ניצור איתך קשר בהקדם.");

@@ -226,6 +226,30 @@ textarea:focus {
   font-size: 1.45rem;
 }
 
+.cart-summary {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(181, 138, 67, 0.75);
+  border-radius: 14px;
+  background: rgba(255, 249, 232, 0.78);
+  color: var(--primary-dark);
+}
+
+.cart-summary h3 {
+  margin: 0 0 10px;
+  color: var(--primary-dark);
+  font-size: 1rem;
+}
+
+.cart-summary ul {
+  margin: 0;
+  padding: 0 20px 0 0;
+}
+
+.cart-summary li {
+  margin: 6px 0;
+}
+
 .admin-link {
   position: relative;
   z-index: 1;
