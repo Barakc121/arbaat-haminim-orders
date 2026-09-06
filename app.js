@@ -92,13 +92,15 @@ function renderCartSummary() {
   if (!pendingOrders.length) {
     cartSummary.classList.add("hidden");
     cartSummary.innerHTML = "";
+    if (submitBtn) submitBtn.textContent = pageMode === "admin" ? "הוסף להזמנות" : "שלח הזמנה";
     return;
   }
 
   const totalItems = pendingOrders.reduce((total, order) => total + order.quantity, 0);
   cartSummary.classList.remove("hidden");
+  if (submitBtn) submitBtn.textContent = pageMode === "admin" ? "שלח את ההזמנות" : "שלח את ההזמנה";
   cartSummary.innerHTML = `
-    <h3>סיכום ההזמנה (${pendingOrders.length} פריטים, ${totalItems} יחידות)</h3>
+    <h3>סיכום ההזמנה (${pendingOrders.length} פריטים, ${totalItems} יחידות) · אפשר לשלוח עכשיו</h3>
     <ul>
       ${pendingOrders
         .map(
@@ -569,9 +571,17 @@ function escapeHtml(value) {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (isSubmitting) return;
-  const currentOrder = createOrderFromForm();
-  if (!currentOrder) return;
-  const ordersToSend = [...pendingOrders, currentOrder];
+
+  const hasCurrentProduct = normalizeText(productTypeInput.value);
+  const currentOrder = hasCurrentProduct ? createOrderFromForm() : null;
+  if (!currentOrder && !pendingOrders.length) {
+    showOrderStatus("יש להוסיף הזמנה לפני השליחה");
+    alert("יש להוסיף הזמנה לפני השליחה");
+    return;
+  }
+  const ordersToSend = currentOrder
+    ? [...pendingOrders, currentOrder]
+    : [...pendingOrders];
 
   isSubmitting = true;
   if (submitBtn) {
