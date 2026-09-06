@@ -285,7 +285,7 @@ textarea:focus {
   margin-bottom: 24px;
   padding: 28px 34px;
   overflow: hidden;
-  background: linear-gradient(135deg, #eef0ef 0%, #cbd1cf 52%, #e4e7e6 100%);
+  background: transparent;
   border: 2px solid #b58a43;
   border-radius: 24px;
   box-shadow: 0 16px 34px rgba(58, 45, 30, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.8);
