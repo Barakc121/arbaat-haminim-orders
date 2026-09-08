@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>שוק ארבעת המינים - כפר יעבץ | הזמנות</title>
@@ -9,95 +10,101 @@
     <meta property="og:title" content="שוק ארבעת המינים - כפר יעבץ" />
     <meta property="og:description" content="הזמינו את ארבעת המינים בקלות. משלוחים חינם באזור גוש תל מונד." />
     <meta property="og:url" content="https://barakc121.github.io/arbaat-haminim-orders/" />
-    <meta property="og:image" content="https://www.amhazak.com/_next/image?url=https%3A%2F%2Fapi.amhazak.com%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fholiday-images%2Fsukkot.jpg&w=3840&q=75" />
+    <meta property="og:image"
+        content="https://www.amhazak.com/_next/image?url=https%3A%2F%2Fapi.amhazak.com%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fholiday-images%2Fsukkot.jpg&w=3840&q=75" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body data-mode="public">
+</head>
+
+<body data-mode="public">
     <div class="app-shell public-shell">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div>
-            <p class="eyebrow">שוק ארבעת המינים</p>
-            <p class="brand-location">כפר יעבץ</p>
-          </div>
-        </div>
-        <a href="admin.html" class="ghost-btn small-btn admin-link">כניסה למנהל</a>
-      </header>
-
-      <main class="public-panel">
-        <span class="floating-etrog etrog-one" role="button" tabindex="0" aria-label="אתרוג זז">🍋</span>
-        <span class="floating-etrog etrog-two" role="button" tabindex="0" aria-label="אתרוג זז">🍋</span>
-        <span class="floating-etrog etrog-three" role="button" tabindex="0" aria-label="אתרוג זז">🍋</span>
-        <section class="panel form-panel public-form-panel">
-          <h2>הזמנה</h2>
-          <p class="public-subtitle">מלא את הפרטים וניצור איתך קשר בהקדם</p>
-
-          <form id="orderForm" novalidate>
-            <div class="field-grid">
-              <label>
-                <span>שם מלא</span>
-                <input id="customerName" name="customerName" type="text" placeholder="לדוגמה: אבי כהן" required />
-              </label>
-
-              <label>
-                <span>טלפון</span>
-                <input id="customerPhone" name="customerPhone" type="tel" placeholder="050-1234567" required />
-              </label>
-
-              <label>
-                <span>סוג סט</span>
-                <select id="productType" name="productType">
-                  <option value="">בחר סט</option>
-                  <optgroup label="תימני">
-                    <option value="כשר לברכה תימני">כשר לברכה תימני — 69 ש"ח</option>
-                    <option value="מהודר תימני">מהודר תימני — 100 ש"ח</option>
-                    <option value="מהודר א תימני">מהודר א תימני — 250 ש"ח</option>
-                    <option value="מהודר א א תימני">מהודר א.א תימני — 450 ש"ח</option>
-                  </optgroup>
-                  <optgroup label="מרוקאי">
-                    <option value="כשר לברכה מרוקאי">כשר לברכה מרוקאי — 99 ש"ח</option>
-                    <option value="מהודר מרוקאי">מרוקאי מהודר — 200 ש"ח</option>
-                    <option value="מהודר א מרוקאי">מרוקאי מהודר א — 300 ש"ח</option>
-                    <option value="מהודר א א מרוקאי">מרוקאי מהודר א.א — 500 ש"ח</option>
-                  </optgroup>
-                  <optgroup label="נלווים">
-                    <option value="הדסי רש\"י">הדסי רש"י — 130 ש"ח</option>
-                    <option value="נרתיק מהודר לולב">נרתיק מהודר לולב — 60 ש"ח</option>
-                    <option value="קופסא מהודרת לאתרוג">קופסא מהודרת לאתרוג — 40 ש"ח</option>
-                  </optgroup>
-                </select>
-              </label>
-
-              <label>
-                <span>כמות</span>
-                <input id="quantity" name="quantity" type="number" min="1" value="1" required />
-              </label>
-
-              <label class="checkbox-field">
-                <span>האם צריך משלוח?</span>
-                <input id="needsDelivery" name="needsDelivery" type="checkbox" />
-              </label>
-
-              <label id="deliveryAddressField" class="shipping-address hidden">
-                <span>לאן המשלוח</span>
-                <textarea id="deliveryAddress" name="deliveryAddress" rows="2" placeholder="כתובת מלאה למשלוח"></textarea>
-              </label>
+        <header class="topbar">
+            <div class="brand-wrap">
+                <div>
+                    <p class="eyebrow">שוק ארבעת המינים</p>
+                    <p class="brand-location">כפר יעבץ</p>
+                </div>
             </div>
+            <a href="admin.html" class="ghost-btn small-btn admin-link">כניסה למנהל</a>
+        </header>
 
-            <div class="actions">
-              <button type="button" id="addOrderBtn" class="ghost-btn">הוסף הזמנה נוספת</button>
-              <button type="button" id="clearCurrentOrderBtn" class="ghost-btn small-btn">נקה בחירה</button>
-              <button type="submit" class="primary-btn">שלח הזמנה</button>
-            </div>
-            <div id="cartSummary" class="cart-summary hidden" aria-live="polite"></div>
-            <p class="delivery-note">משלוחים חינם באזור גוש תל מונד</p>
-            <p id="orderStatus" class="order-status" role="status" aria-live="polite"></p>
-          </form>
-        </section>
-      </main>
+        <main class="public-panel">
+            <span class="floating-etrog etrog-one" role="button" tabindex="0" aria-label="אתרוג זז">🍋</span>
+            <span class="floating-etrog etrog-two" role="button" tabindex="0" aria-label="אתרוג זז">🍋</span>
+            <span class="floating-etrog etrog-three" role="button" tabindex="0" aria-label="אתרוג זז">🍋</span>
+            <section class="panel form-panel public-form-panel">
+                <h2>הזמנה</h2>
+                <p class="public-subtitle">מלא את הפרטים וניצור איתך קשר בהקדם</p>
+
+                <form id="orderForm" novalidate>
+                    <div class="field-grid">
+                        <label>
+                            <span>שם מלא</span>
+                            <input id="customerName" name="customerName" type="text" placeholder="לדוגמה: אבי כהן"
+                                required />
+                        </label>
+
+                        <label>
+                            <span>טלפון</span>
+                            <input id="customerPhone" name="customerPhone" type="tel" placeholder="050-1234567"
+                                required />
+                        </label>
+
+                        <label>
+                            <span>סוג סט</span>
+                            <select id="productType" name="productType">
+                                <option value="">בחר סט</option>
+                                <optgroup label="תימני">
+                                    <option value="כשר לברכה תימני">כשר לברכה תימני — 80 ש"ח</option>
+                                    <option value="מהודר תימני">מהודר תימני — 120 ש"ח</option>
+                                    <option value="מהודר א תימני">מהודר א תימני — 200 ש"ח</option>
+                                    <option value="מהודר א א תימני">מהודר א.א תימני — 450 ש"ח</option>
+                                </optgroup>
+                                <optgroup label="מרוקאי">
+                                    <option value="כשר לברכה מרוקאי">כשר לברכה מרוקאי — 99 ש"ח</option>
+                                    <option value="מהודר מרוקאי">מרוקאי מהודר — 200 ש"ח</option>
+                                    <!-- <option value="מהודר א מרוקאי">מרוקאי מהודר א — 30÷0 ש"ח</option> -->
+                                    <option value="מהודר א א מרוקאי">מרוקאי מהודר א.א — 450 ש"ח</option>
+                                </optgroup>
+                                <optgroup label="נלווים">
+                                    <option value="הדסי רש\" י">הדסי רש"י — 130 ש"ח</option>
+                                    <!-- <option value="נרתיק מהודר לולב">נרתיק מהודר לולב ÷— 60 ש"ח</option> -->
+                                    <option value="קופסא מהודרת לאתרוג">קופסא מהודרת לאתרוג — 40 ש"ח</option>
+                                </optgroup>
+                            </select>
+                        </label>
+
+                        <label>
+                            <span>כמות</span>
+                            <input id="quantity" name="quantity" type="number" min="1" value="1" required />
+                        </label>
+
+                        <label class="checkbox-field">
+                            <span>האם צריך משלוח?</span>
+                            <input id="needsDelivery" name="needsDelivery" type="checkbox" />
+                        </label>
+
+                        <label id="deliveryAddressField" class="shipping-address hidden">
+                            <span>לאן המשלוח</span>
+                            <textarea id="deliveryAddress" name="deliveryAddress" rows="2"
+                                placeholder="כתובת מלאה למשלוח"></textarea>
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" id="addOrderBtn" class="ghost-btn">הוסף הזמנה נוספת</button>
+                        <button type="button" id="clearCurrentOrderBtn" class="ghost-btn small-btn">נקה בחירה</button>
+                        <button type="submit" class="primary-btn">שלח הזמנה</button>
+                    </div>
+                    <div id="cartSummary" class="cart-summary hidden" aria-live="polite"></div>
+                    <p class="delivery-note">משלוחים חינם באזור גוש תל מונד</p>
+                    <p id="orderStatus" class="order-status" role="status" aria-live="polite"></p>
+                </form>
+            </section>
+        </main>
     </div>
 
     <script src="app.js"></script>
-  </body>
+</body>
+
 </html>
